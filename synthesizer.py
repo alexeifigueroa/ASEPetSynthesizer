@@ -12,7 +12,7 @@ import fractions
 import functools
 import os
 import pygame
-import winsound,io,struct
+import io,struct
 import wx
 import wx.adv
 from collections import defaultdict
@@ -116,22 +116,6 @@ class wxHelloApp(wx.App):
             #self.createSignals()
         #wx.adv.Sound.Stop()
         createSoundFreq(key=49)
-    def onKeyPress(self,event):
-        code=event.GetKeyCode()
-        #print(code)
-        if code in self.__keyMap and code not in self.__pressedKey:
-            self.__pressedKey[code]=True
-            self.createSignals()
-            #self.__pressedKey[code].Play(wx.adv.SOUND_ASYNC|wx.adv.SOUND_LOOP)
-    def onKeyRelease(self,event):
-        code=event.GetKeyCode()
-        #print("released "+str(code)+" "+str(chr(code)))
-        if code in self.__pressedKey:
-            #self.__pressedKey[code].Stop()
-            self.__pressedKey.pop(code)
-            self.createSignals()
-        #dial=wx.MessageDialog(self.__frame,"Here's a dialog")
-        #dial.ShowModal()
     def createSignals(self):
         #createSoundFreq(key=self.__keyMap[code])
         Fs=44100  #Sampling frequency
