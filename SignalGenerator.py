@@ -33,7 +33,7 @@ class SignalGenerator(object):
     of an Analogue Synthesizer
     '''
 
-    def __init__(self, Fs=44100,frameSize=4410.0/44100):
+    def __init__(self,window_on=False, Fs=44100,frameSize=4410.0/44100):
         '''
         Constructor
         '''
@@ -49,16 +49,17 @@ class SignalGenerator(object):
         a={}
         self.__b, self.__a = scipy.signal.butter(8, 0.5, 'low', analog=False)
         
-        window=scipy.signal.hanning(int(frameSize*Fs),True)
+        
         #window=[]
         self.__channels={}
-        #self.generateSounds(window,(self.__a,self.__b)) 
-        self.generateSounds([])
+        if window_on:
+            window=scipy.signal.hanning(int(frameSize*Fs),True)
+            self.generateSounds(window)
+        else:
+            self.generateSounds([])
     
     def generate(self):
-        #self.__run=True
         if self.diffKeys(self.__activeKeys):
-            print(self.__keys)
             for k in self.__channels:
                 self.__channels[k].set_volume(0)
             for k in self.__keys:
@@ -70,11 +71,12 @@ class SignalGenerator(object):
         for k in keyMap:
             f=self.keyFreq(keyMap[k])
             T=1.0/f
+            window=1
             if len(w)!=0:
                 T=len(w)*self.__Ts
+                window=w
             t=np.arange(0,T,self.__Ts)
-            if len(w)==0:
-                window=1
+            
             s=32767.0*np.sin(2*np.pi*f*t)*window
             if fil:
                 s=scipy.signal.lfilter(fil[0], fil[1], s)
@@ -98,6 +100,3 @@ class SignalGenerator(object):
             if keys[k]!=self.__keys[k]:
                 return True
         return False
-        
-    def stop(self):
-        self.__run=False    
