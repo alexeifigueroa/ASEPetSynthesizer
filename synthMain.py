@@ -5,30 +5,9 @@ Created on Dec 10, 2017
 '''
 
 import pygame
-import numpy as np
-import fractions,functools
-from collections import defaultdict
-keyMap={      pygame.K_a:49,    # A -> A
-              pygame.K_w:50,    # W -> A#
-              pygame.K_s:51,    # S -> B
-              pygame.K_d:52,    # D -> C
-              pygame.K_r:53,    # R -> C#
-              pygame.K_f:54,    # F -> D
-              pygame.K_t:55,    # T -> D#
-              pygame.K_g:56,    # G -> E
-              pygame.K_h:57,    # H -> F
-              pygame.K_u:58,    # U -> F#
-              pygame.K_j:59,    # J -> G
-              pygame.K_i:60,    # I -> G#
-              pygame.K_k:61,    # K -> A
-              pygame.K_o:62,    # O -> A#
-              pygame.K_l:63    # L -> B
-              }
-sounds=defaultdict(pygame.mixer.Sound)
-def keyFreq(n):
-    #0 =A=440Hz
-    return np.power(2,(n-49)/12)*440#Hz
-def drawPiano(pressed):
+import SignalGenerator
+
+def drawPiano(pressed,screen,vibrato):
     whites=[(pygame.K_a,"A","A",0),(pygame.K_s,"S","B",1),
             (pygame.K_d,"D","C",2),(pygame.K_f,"F","D",3),
             (pygame.K_g,"G","E",4),(pygame.K_h,"H","F",5),
@@ -40,56 +19,66 @@ def drawPiano(pressed):
     color_white=(255,255,255)
     color_pressed=(128,128,128)
     color_sharp=(0,0,0)
-    #draw keys
+    x0=90
+    y0=40
     
+    # initialize font; must be called after 'pygame.init()' to avoid 'Font not Initialized' error
+    label_font = pygame.font.SysFont("monospace", 15)
+
+    # render text
     
     for code,k,label,x in whites:
-        keyWidth=20
-        keyHeight=200
-        keyX=10+x*(keyWidth+2)
-        keyColor=color_white if code not in pressed else color_pressed
-        pygame.draw.rect(screen, keyColor, [keyX, 10, keyWidth, keyHeight])
+        width=20
+        height=200
+        x_i=10+x*(width+2)+x0
+        color_i=color_white if code not in pressed else color_pressed
+        pygame.draw.rect(screen, color_i, [x_i, y0, width, height])
+        k_label = label_font.render(k, 1, (0,0,0))
+        screen.blit(k_label, (x_i+width/3, height-20+y0))
+        
     for code,k,label,x in blacks:
-        keyColor=color_sharp if code not in pressed else color_pressed
-        keyWidth=15
-        keyHeight=130
-        keyX=10+(20+2)*x-keyWidth/2
-        pygame.draw.rect(screen, keyColor, [keyX, 10, keyWidth, keyHeight])
-def createSounds():
-    Fs=44100  #Sampling frequency
-    Ts=1.0/Fs #Sampling time
-           
-    for k in keyMap:
-        f=keyFreq(keyMap[k])
-        T=1/f #Seconds
-        t=np.arange(0,T-Ts,Ts)
-        s=np.int16(32767.0*np.cos(2*np.pi*f*t))
-        sounds[k]=pygame.sndarray.make_sound(s)
-        
-pygame.mixer.pre_init(44100, size=-16, channels=1)
-pygame.mixer.init()
-pygame.init()
-screen = pygame.display.set_mode((400, 300))
-done = False
-createSounds()
-drawPiano({})
-while not done:
-    
+        color_i=color_sharp if code not in pressed else color_pressed
+        width=15
+        height=130
+        x_i=10+(20+2)*x-width/2+x0
+        pygame.draw.rect(screen, color_i, [x_i, y0, width, height])
+        k_label = label_font.render(k, 1, (255,255,255))
+        screen.blit(k_label, (x_i+width/5, height-20+y0))
+    vibrato_state={False:"Toggle vibrato with V (off)",
+                   True:"Toggle vibrato with V (on)"}
+    vibrato_label = label_font.render(vibrato_state[vibrato], 1, (255,255,255))
+    pygame.draw.rect(screen,(0,0,0),[20,280,400,20])
+    screen.blit(vibrato_label, (20, 280))
+
+def main():
+            
+    pygame.mixer.pre_init(44100,-16, 1,1024)
+    pygame.mixer.init()
+    pygame.mixer.set_num_channels(15)
+    pygame.init()
+    screen = pygame.display.set_mode((400, 300))
+    done = False
+    vibrato=False
+    drawPiano({},screen,vibrato)
+    keys={}
+    signalGen=SignalGenerator.SignalGenerator()
+    while not done:
         for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                        done = True
-                if event.type==pygame.KEYDOWN:
-                    pressed = pygame.key.get_pressed()
-                    keys={i:True for i in range(len(pressed)-1) if pressed[i]==1 and i in keyMap}
-                    #print(keys)
-                    for k in keys:
-                        sounds[k].play(loops=-1)
-                    drawPiano(keys)
-                if event.type==pygame.KEYUP and event.key in keyMap:
-                    sounds[event.key].stop()
-                    pressed = pygame.key.get_pressed()
-                    keys={i:True for i in range(len(pressed)-1) if pressed[i]==1 and i in keyMap}
-                    drawPiano(keys)
-                    
-        
+            
+            if event.type == pygame.QUIT:
+                done = True
+            if event.type in (pygame.KEYDOWN,pygame.KEYUP) and event.key in SignalGenerator.keyMap:
+                pressed = pygame.key.get_pressed()
+                keys={i:True for i in range(len(pressed)-1) if pressed[i]==1 and i in SignalGenerator.keyMap}
+                drawPiano(keys,screen,vibrato)
+                signalGen.setKeys(keys)
+                signalGen.generate()
+            if event.type ==pygame.KEYUP and event.key==pygame.K_v:
+                vibrato=not vibrato
+                drawPiano(keys,screen,vibrato)
+                signalGen=SignalGenerator.SignalGenerator(vibrato)
         pygame.display.flip()
+            
+if __name__ == "__main__":
+    main()
+        
