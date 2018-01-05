@@ -4,11 +4,7 @@ Created on Dec 19, 2017
 @author: alexei
 '''
 import numpy as np
-import pygame,wave,io,struct,scipy.signal
-import time
-from asyncio.tasks import sleep
-from scipy.fftpack import fft, ifft
-import matplotlib.pyplot as plt
+import pygame,scipy.signal
 
 keyMap={      pygame.K_a:49,    # A -> A
               pygame.K_w:50,    # W -> A#
