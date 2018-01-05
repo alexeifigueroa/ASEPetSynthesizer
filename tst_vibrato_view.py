@@ -10,7 +10,7 @@ import pygame
 class Test(unittest.TestCase):
     def setUp(self):
         pygame.init()
-        screen = pygame.display.set_mode((400, 300))
+        screen = None   #No screen device will be present in the engine
         self.vibrato_view=vibratoView(screen)
     def tearDown(self):
         pass
