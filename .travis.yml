@@ -6,4 +6,4 @@ python:
 install:
     - pip install -r requirements.txt
 script:
-    -python tst_vibrato_view.py
+    - python tst_vibrato_view.py
