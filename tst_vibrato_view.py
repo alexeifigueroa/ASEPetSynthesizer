@@ -1,7 +1,9 @@
 '''
 Created on 5 Jan 2018
 
-@author: alexei.figueroa
+@author: Alexei Figueroa
+
+This is a unit test testing the vibrato view state behaviour
 '''
 import unittest
 from view import vibratoView
@@ -20,5 +22,4 @@ class Test(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()

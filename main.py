@@ -10,7 +10,7 @@ it starts the main event loop.
 '''
 
 import pygame
-import SignalGenerator
+import CONSTANTS
 from  view import keyboardView,vibratoView
 from presenter import pianoPresenter,vibratoPresenter
 from  model import synthesizerModel
@@ -33,12 +33,11 @@ def main():
     #Main event loop
     while not done:
         for event in pygame.event.get():
-            
             if event.type == pygame.QUIT:
                 done = True
-            if event.type in (pygame.KEYDOWN,pygame.KEYUP) and event.key in SignalGenerator.keyMap:
+            if event.type in (pygame.KEYDOWN,pygame.KEYUP) and event.key in CONSTANTS.keyMap:
                 pressed = pygame.key.get_pressed()
-                keys={i:True for i in range(len(pressed)-1) if pressed[i]==1 and i in SignalGenerator.keyMap}
+                keys={i:True for i in range(len(pressed)-1) if pressed[i]==1 and i in CONSTANTS.keyMap}
                 keyboardPresenter.onPressKeys(keys)
             if event.type ==pygame.KEYUP and event.key==pygame.K_v:
                 vib_presenter.onToggleVibrato()
