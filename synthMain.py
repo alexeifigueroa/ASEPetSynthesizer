@@ -1,7 +1,12 @@
 '''
 Created on Dec 10, 2017
 
-@author: alexei
+@author: Alexei Figueroa
+
+This file runs the main program, it initializes the pygame mixer and
+spawns the Models, Views and Presenters of the synthesizer game and finally
+it starts the main event loop.
+
 '''
 
 import pygame
@@ -10,20 +15,22 @@ from  view import keyboardView,vibratoView
 from presenter import pianoPresenter,vibratoPresenter
 from  model import synthesizerModel
 def main():
-            
+    #Initialize pygame and the mixer        
     pygame.mixer.pre_init(44100,-16, 1,1024)
     pygame.mixer.init()
     pygame.mixer.set_num_channels(15)
     pygame.init()
     screen = pygame.display.set_mode((400, 300))
-    done = False
     
+    done = False
+    #Spawn Views, Model and Presenters
     piano=keyboardView(screen)
     vibrato=vibratoView(screen)
     model=synthesizerModel()
     keyboardPresenter=pianoPresenter(piano,model)
     vib_presenter=vibratoPresenter(vibrato,model)
-    keys={}
+    
+    #Main event loop
     while not done:
         for event in pygame.event.get():
             
