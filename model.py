@@ -14,7 +14,7 @@ TODO:
 from SignalGenerator import SignalGenerator
 
 
-class synthesizerModel(object):
+class SynthesizerModel(object):
     '''
     This class represents the domain logic of the
     synthesizer, it holds the signal generator.
@@ -26,27 +26,27 @@ class synthesizerModel(object):
         Constructor
         '''
         self.vibrato=False
-        self.sineGenerator=SignalGenerator(window_on=False, Fs=44100,frameSize=4410.0/44100)
+        self.sineGenerator=SignalGenerator(window_on=False, fs=44100,frame_size=4410.0/44100)
     
-    def initializeGenerator(self):
+    def initialize_generator(self):
         """
         This method initializes the signal generator with the model accessible parameters , 
         in this case only vibrato
         """
-        self.sineGenerator=SignalGenerator(window_on=self.__vibrato, Fs=44100,frameSize=4410.0/44100)
-    def switchOnSignalChannels(self,keys):
+        self.sineGenerator=SignalGenerator(window_on=self.__vibrato, fs=44100,frame_size=4410.0/44100)
+    def switch_on_signal_channels(self,keys):
         """
         This method updates the signal generator and makes it play on all the mixer channels.
         """
-        self.sineGenerator.setKeys(keys)
+        self.sineGenerator.set_keys(keys)
         self.sineGenerator.generate()
         
     """
     Getters,Setters and properties
     """
-    def getVibrato(self):
+    def get_vibrato(self):
         return self.__vibrato
-    def setVibrato(self,vibrato):
+    def set_vibrato(self,vibrato):
         self.__vibrato=vibrato
-    vibrato=property(getVibrato,setVibrato)
+    vibrato=property(get_vibrato,set_vibrato)
     

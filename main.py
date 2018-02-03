@@ -11,9 +11,9 @@ it starts the main event loop.
 
 import pygame
 import CONSTANTS
-from  view import keyboardView,vibratoView
-from presenter import pianoPresenter,vibratoPresenter
-from  model import synthesizerModel
+from  view import KeyboardView,VibratoView
+from presenter import PianoPresenter,VibratoPresenter
+from  model import SynthesizerModel
 def main():
     #Initialize pygame and the mixer        
     pygame.mixer.pre_init(44100,-16, 1,1024)
@@ -24,11 +24,11 @@ def main():
     
     done = False
     #Spawn Views, Model and Presenters
-    piano=keyboardView(screen)
-    vibrato=vibratoView(screen)
-    model=synthesizerModel()
-    keyboardPresenter=pianoPresenter(piano,model)
-    vib_presenter=vibratoPresenter(vibrato,model)
+    piano=KeyboardView(screen)
+    vibrato=VibratoView(screen)
+    model=SynthesizerModel()
+    keyboard_presenter=PianoPresenter(piano,model)
+    vib_presenter=VibratoPresenter(vibrato,model)
     
     #Main event loop
     while not done:
@@ -38,9 +38,9 @@ def main():
             if event.type in (pygame.KEYDOWN,pygame.KEYUP) and event.key in CONSTANTS.keyMap:
                 pressed = pygame.key.get_pressed()
                 keys={i:True for i in range(len(pressed)-1) if pressed[i]==1 and i in CONSTANTS.keyMap}
-                keyboardPresenter.onPressKeys(keys)
+                keyboard_presenter.on_press_keys(keys)
             if event.type ==pygame.KEYUP and event.key==pygame.K_v:
-                vib_presenter.onToggleVibrato()
+                vib_presenter.on_toggle_vibrato()
         pygame.display.flip()
             
 if __name__ == "__main__":

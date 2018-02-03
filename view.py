@@ -7,24 +7,24 @@ This module holds the classes related to views in the synthesizer application.
 '''
 import pygame,abc,CONSTANTS
 
-class view(metaclass=abc.ABCMeta):
+class View(metaclass=abc.ABCMeta):
     """
-    Interface specifiying the method signatures of a view
+    Interface specifiying the method signatures of a View
     """
     def __init__(self, screen):
         self.screen=screen
     @abc.abstractmethod
     def draw(self):
         """
-        This method should enable the view to be rendered on
+        This method should enable the View to be rendered on
         the screen.
         """
 
 
-class keyboardView(view):
+class KeyboardView(View):
     '''
     This class draws the synthesizer keyboard on the screen
-    it implements the view interface.
+    it implements the View interface.
     '''
 
     def __init__(self, screen):
@@ -39,7 +39,7 @@ class keyboardView(view):
     def draw(self):
         '''
             This method renders the each key, set's a label for 
-            each one of them depending on the state of the view.
+            each one of them depending on the state of the View.
         '''
         x0=90
         y0=40
@@ -66,17 +66,17 @@ class keyboardView(view):
     """
     Getters and setters, properties
     """
-    #Property holding the state of the pressed keys in the view.
-    def setPressed(self,pressed):
+    #Property holding the state of the pressed keys in the View.
+    def set_pressed(self,pressed):
         self.__pressed=pressed
-    def getPressed(self):
+    def get_pressed(self):
         return self.__pressed
-    pressed=property(getPressed,setPressed)
+    pressed=property(get_pressed,set_pressed)
 
-class vibratoView(view):
+class VibratoView(View):
     """
     This class draws the vibrato control on the screen, it implements
-    the view interface
+    the View interface
     """
     def __init__(self, screen):
         '''
@@ -97,10 +97,10 @@ class vibratoView(view):
     Getters and setters, properties
     """
     #Property holding the state of the vibrato being displayed.    
-    def getVibrato(self):
+    def get_vibrato(self):
         return self.__vibrato
-    def setVibrato(self,vibrato):
+    def set_vibrato(self,vibrato):
         self.__vibrato=vibrato
-    vibrato=property(getVibrato,setVibrato)
+    vibrato=property(get_vibrato,set_vibrato)
     
     

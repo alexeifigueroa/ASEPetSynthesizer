@@ -14,24 +14,24 @@ class SignalGenerator(object):
     of an Analogue Synthesizer
     '''
 
-    def __init__(self,window_on=False, Fs=44100,frameSize=4410.0/44100):
+    def __init__(self,window_on=False, fs=44100,frame_size=4410.0/44100):
         '''
         Constructor
         @window_on: Boolean, states whether to apply a hanning window to the signal.
-        @Fs: Sampling frequency
-        @frameSize: Number of samples per frame defaults to 100 milliseconds
+        @fs: Sampling frequency
+        @frame_size: Number of samples per frame defaults to 100 milliseconds
         '''
-        self.__Fs=Fs
-        self.__Ts=1.0/Fs
-        self.__frameSize=frameSize
+        self.__fs=fs
+        self.__ts=1.0/fs
+        self.__frame_size=frame_size
         self.__keys={}
         self.__t0=0
         self.__run=False
-        self.__activeKeys={}
+        self.__active_keys={}
         self.__channels={}
         
-        window=scipy.signal.hanning(int(frameSize*Fs),True) if window_on else []
-        self.generateSounds(window)
+        window=scipy.signal.hanning(int(frame_size*fs),True) if window_on else []
+        self.generate_sounds(window)
     
     def generate(self):
         """
@@ -39,15 +39,15 @@ class SignalGenerator(object):
         frequencies related to the keys by enabling the signal on the mixer
         through changing the volume.
         """
-        if self.diffKeys(self.__activeKeys):
+        if self.diff_keys(self.__active_keys):
             for k in self.__channels:
                 self.__channels[k].set_volume(0)
             for k in self.__keys:
                 self.__channels[k].set_volume(1.0/len(self.__keys))
-            self.__activeKeys=self.__keys
+            self.__active_keys=self.__keys
             
     
-    def generateSounds(self,w):
+    def generate_sounds(self,w):
         """
         This method generates sine waves with the frequencies
         of the keys specified in CONSTANTS.keyMap, it also plays
@@ -58,13 +58,13 @@ class SignalGenerator(object):
             to simulate vibrato.
         """
         for k in CONSTANTS.keyMap:
-            f=self.keyFreq(CONSTANTS.keyMap[k])
+            f=self.key_frequency(CONSTANTS.keyMap[k])
             T=1.0/f
             window=1
             if len(w)!=0:
-                T=len(w)*self.__Ts
+                T=len(w)*self.__ts
                 window=w
-            t=np.arange(0,T,self.__Ts)
+            t=np.arange(0,T,self.__ts)
             
             s=32767.0*np.sin(2*np.pi*f*t)*window
             self.__channels[k]=pygame.mixer.find_channel(True)
@@ -73,7 +73,7 @@ class SignalGenerator(object):
             self.__channels[k].set_volume(0.0)
             self.__channels[k].play(sound,loops=-1)
             
-    def keyFreq(self,n):
+    def key_frequency(self,n):
         """
         Returns the frequency associated to a key number in a piano.
         @n: Key number in the piano
@@ -81,7 +81,7 @@ class SignalGenerator(object):
         #0 =A=440Hz
         return np.power(2,(n-49)/12)*440#Hz
     
-    def diffKeys(self,keys):
+    def diff_keys(self,keys):
         """
         Returns True if the keys received as an argument are different
         from the keys that are generating sound in the mixer.
@@ -100,5 +100,5 @@ class SignalGenerator(object):
     """
     Getters and Setters
     """
-    def setKeys(self,keys):
+    def set_keys(self,keys):
         self.__keys=keys
