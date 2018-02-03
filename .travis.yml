@@ -2,14 +2,15 @@ dist: trusty
 sudo: required
 language: python
 python:
-    - "3.6"
+- '3.6'
 install:
-    - pip install -r requirements.txt
+- pip install -r requirements.txt
 addons:
   sonarcloud:
-    organization: "synthesizer" # the key of the org you chose at step #3
+    organization: alexeifigueroa-github
     token:
-      secure: a455c0aec55b9f2f273bc638b9e8026e6e5a7d78 # encrypted value of your token
+      secure: lb1RTLaD0M7Nk6nc2FnlChxYJG+8j/Z5kh/LhcucHu3jxlg5p7vIXNrzx07WsD8y74NTTATDzLH0bVrEzICK15P8ZzaomAQPg2JMV6Gg52S2bIUHDM1tivvMpuQiIKFoUObPCmpAhOZnjngPOPWPQ8U/8o4tOthdEAkaX9JGCIUersME6xytKqJ04vlI0cEaN0HBNX70wsLs/OZE6TQzLPjv82VT+5kD9KRkNwfqxbiJhHmAOKnf/GYui57SxmGOtHGWi6t4iFXgr/qXdHGRiHpQWzSXX02ga4xSvMl0KaiOfiWj4NyHq1fdvAKCEM0AJD2bY3qMNZhOoGe3Lx/Ligp/BZFYauMNWnKqBa6mA5dGX4JEfHJWxVJ3S/W7PRn11d44x6VeDfiiLgXQcCKAzulCDc+c1IBMo0+0pZWFCF7CwfzDSN6AOtZ3HJo32akUXfEdXqZC6sdhTd4minhjsbJJYFxz2YIjFB7ZVQ/0ou15oMsaGuUa4bOLzEmboOofI0UzunjjdVleVe3AXFMehAISk7VZ4QyoCLuwdVHCdI0QR9MvGIRT/OR9Ej01NxbeQHUsqzOJWBbnejLBTpctDy0axObkOtSovrO8sme3P9Yyser9aEcpDCinEJW8DUzuFxBdvhvDIqy79Y8JW7P45fZXMFd0ThBjspYT6HBEm6w=
+
 script:
-    - python tst_vibrato_view.py
-    - sonar-scanner
+- python tst_vibrato_view.py
+- sonar-scanner
