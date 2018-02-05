@@ -26,20 +26,20 @@ class SynthesizerModel(object):
         Constructor
         '''
         self.vibrato=False
-        self.sineGenerator=SignalGenerator(window_on=False, fs=44100,frame_size=4410.0/44100)
+        self.sine_generator=SignalGenerator(window_on=False, fs=44100,frame_size=4410.0/44100)
     
     def initialize_generator(self):
         """
         This method initializes the signal generator with the model accessible parameters , 
         in this case only vibrato
         """
-        self.sineGenerator=SignalGenerator(window_on=self.__vibrato, fs=44100,frame_size=4410.0/44100)
+        self.sine_generator=SignalGenerator(window_on=self.__vibrato, fs=44100,frame_size=4410.0/44100)
     def switch_on_signal_channels(self,keys):
         """
         This method updates the signal generator and makes it play on all the mixer channels.
         """
-        self.sineGenerator.set_keys(keys)
-        self.sineGenerator.generate()
+        self.sine_generator.set_keys(keys)
+        self.sine_generator.generate()
         
     """
     Getters,Setters and properties
