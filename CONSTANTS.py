@@ -7,6 +7,9 @@ This module holds the constants to be used in the program.
 
 '''
 import pygame
+LOG_ARGUMENTS=True
+TIME_EXECUTION=True
+
 #Map of key codes to the number of each key in a keyboard
 keyMap={pygame.K_a:49,    # A -> A
         pygame.K_w:50,    # W -> A#
