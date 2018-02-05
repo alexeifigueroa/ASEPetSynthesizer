@@ -6,7 +6,8 @@ Created on Jan 3, 2018
 This module holds the Presenter classes following the MVP paradigm
 of synchronizing user interaction with domain logic.
 '''
-
+import aspects
+from aspects import log_arguments, time_execution
 class Presenter(object):
     """
     Base class specifiying a Presenter 
@@ -31,6 +32,8 @@ class PianoPresenter(Presenter):
         '''
         super().__init__(view,model)
         self.view.draw()
+    @log_arguments
+    @time_execution
     def on_press_keys(self,keys):
         """
         This method handles sends the keys being pressed to the signal
