@@ -58,18 +58,18 @@ class SignalGenerator(object):
             to simulate vibrato.
         """
         for k in CONSTANTS.keyMap:
-            f=self.key_frequency(CONSTANTS.keyMap[k])
-            T=1.0/f
-            window=1
-            if len(w)!=0:
-                T=len(w)*self.__ts
-                window=w
-            t=np.arange(0,T,self.__ts)
+            f=self.key_frequency(CONSTANTS.keyMap[k])   #Frequency of the piano key
             
-            s=32767.0*np.sin(2*np.pi*f*t)*window
-            self.__channels[k]=pygame.mixer.find_channel(True)
-            sound = pygame.sndarray.make_sound(np.int16(s))
+            window = w if len(w) else 1.0               #Replace the step function when the window parameter is given 
+            T=len(w)*self.__ts if len(w) else 1.0/f     #Resize the sine wave time to one period or the window time
+            t=np.arange(0,T,self.__ts)                  #Create the time dimension
             
+            #Create the wave applying the window with short int amplitude
+            s=32767.0*np.sin(2*np.pi*f*t)*window         
+            self.__channels[k]=pygame.mixer.find_channel(True)  #Book the channel
+            sound = pygame.sndarray.make_sound(np.int16(s))     
+            
+            #mute the channel and play infinitely the sound
             self.__channels[k].set_volume(0.0)
             self.__channels[k].play(sound,loops=-1)
             
