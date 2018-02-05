@@ -9,7 +9,7 @@ import pygame,abc,CONSTANTS
 
 class View(metaclass=abc.ABCMeta):
     """
-    Interface specifiying the method signatures of a View
+    Abstract class specifying the method signatures of a View
     """
     def __init__(self, screen):
         self.screen=screen
