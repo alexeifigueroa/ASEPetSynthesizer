@@ -1,4 +1,5 @@
-# ASEPetSynthesizer
+# ASEPetSynthesizer	
+[![Build Status](https://travis-ci.org/alexeifigueroa/ASEPetSynthesizer.svg?branch=master)](https://travis-ci.org/alexeifigueroa/ASEPetSynthesizer)
 Using ASE lecture knowledge to build a simple synthesizer.
 Refer to the documentation.
 
