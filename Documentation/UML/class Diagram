@@ -1,0 +1,80 @@
+www.planttext.com
+
+@startuml
+
+title ASEPSynthesizer - Class Diagram
+
+
+Abstract class View {
+  +__init__(screen)
+  + draw()
+}
+
+class KeyboardView implements View{
+  +__init__(screen)
+  +draw()
+  +pressed
+  -get_pressed()
+  -set_pressed()
+
+}
+class VibratoView implements View{
+  +__init__(screen)
+  +draw()
+  +vibrato
+  -get_vibrato()
+  -set_vibrato()
+
+}
+
+class Presenter{
+  +__init__(view,model)
+  -view
+  -model
+}
+
+class PianoPresenter extends Presenter{
+  +__init__(view,model)
+  +on_press_keys(keys)
+}
+
+class VibratoPresenter extends Presenter{
+  +__init__(view,model)
+  +on_toogle_vibrato()
+
+}
+
+class SynthesizerModel{
+  +vibrato
+  +sineGenerator
+  +__init__()
+  +initialize_generator()
+  +switch_on_signal_channels(keys)
+  -get_vibrato()
+  -set_vibrato()
+}
+
+class SignalGenerator{
+ -__fs
+ -__ts
+ -__frame_size
+ -__keys
+ -__t0
+ -__run
+ -__active_keys
+ -__channels
+ +__init__()
+ +generate()
+ +generate_sounds(w)
+ +key_frequency(n)
+ +diff_keys(keys)
+ +set_keys(keys)
+
+}
+
+SynthesizerModel o--SignalGenerator
+PianoPresenter o--SynthesizerModel
+PianoPresenter o--KeyboardView
+VibratoPresenter o--SynthesizerModel
+VibratoPresenter o--VibratoView
+@enduml

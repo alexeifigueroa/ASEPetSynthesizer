@@ -1,0 +1,39 @@
+www.planttext.com
+
+@startuml
+
+abstract class View
+class Presenter
+class SynthesizerModel
+object piano
+object vibrato
+object model
+object keyboard_presenter
+object vib_presenter
+object sine_generator
+
+View<|--piano
+View<|--vibrato
+
+Presenter<|--keyboard_presenter
+Presenter<|--vib_presenter
+
+SynthesizerModel<|--model
+
+model o-- sine_generator
+keyboard_presenter o-- model
+keyboard_presenter o-- piano
+vib_presenter o-- model
+vib_presenter o-- vibrato
+
+vibrato : __vibrato = True
+piano : pressed = {pygame.K_a:True}
+model : vibrato = True
+sine_generator : __fs = 44100
+sine_generator : __ts = 1/44100
+sine_generator : __frame_size = 0.1
+sine_generator :  __keys = {pygame.K_a:True}
+sine_generator : __run = False
+sine_generator : __active_keys={}
+sine_generator : __channels={pygame.channel1...pygame.channel16}
+@enduml

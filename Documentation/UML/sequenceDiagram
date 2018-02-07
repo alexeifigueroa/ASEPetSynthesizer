@@ -1,0 +1,11 @@
+www.planttext.com
+
+@startuml
+
+actor User
+User -> PianoPresenter : on_press_keys(keys)
+PianoPresenter -> SynthesizerModel : switch_on_signal_channels(keys)
+PianoPresenter -> KeyboardView : set_pressed(keys)
+PianoPresenter -> KeyboardView : draw()
+
+@enduml

@@ -1,0 +1,21 @@
+www.planttext.com
+
+@startuml
+Initialized : Playing , volume 0
+On: Playing, volume 100
+Off:Playing, volume 0
+
+
+[*] --> Initialized
+
+
+Initialized --> On : key_pressed 
+On -->Off :key_released
+Off -->On :key_pressed
+On -->Initialized : vibrato_toggled
+Off -->Initialized : vibrato_toggled
+
+On -->[*] :exit
+Off -->[*] :exit
+Initialized -->[*] :exit
+@enduml

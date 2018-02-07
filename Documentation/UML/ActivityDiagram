@@ -1,0 +1,21 @@
+www.planttext.com
+
+@startuml
+
+
+start
+
+while (Signals are created?)  is (No)
+  :Create sine wave;
+  if (Is vibrato on?) then (yes)
+    :Multply sine with Hanning window;
+  else (no)
+    :Multiply with 1;
+  endif
+  :Play in channel;
+  :Set channel volume to 0;
+endwhile (Yes)
+
+stop
+
+@enduml
