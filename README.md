@@ -1,8 +1,6 @@
 [![Build Status](https://travis-ci.org/alexeifigueroa/ASEPetSynthesizer.svg?branch=master)](https://travis-ci.org/alexeifigueroa/ASEPetSynthesizer)
 
-https://sonarcloud.io/api/project_badges/measure?project=synthesizer&metric=alert_status
-https://sonarcloud.io/api/project_badges/measure?project=synthesizer&metric=bugs
-https://sonarcloud.io/api/project_badges/measure?project=synthesizer&metric=sqale_index
+[![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=synthesizer&metric=alert_status)](https://sonarcloud.io/api/project_badges/measure?project=synthesizer&metric=alert_status)
 # 
 # ASEPetSynthesizer	
 
