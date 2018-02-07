@@ -14,3 +14,5 @@ numpy==1.13.3
 
 ## To run: ##
 python main.py
+
+[[https://github.com/alexeifigueroa/ASEPetSynthesizer/blob/master/Documentation/Synthesizer.png|alt=Synthesizer]]
